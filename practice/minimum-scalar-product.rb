@@ -1,3 +1,5 @@
+require 'benchmark'
+
 class MinimumScalarProduct
   def mvp(vector1, vector2)
     vector1.zip(vector2).map { |x, y| x * y }.inject(0) { |sum, number| sum + number }
@@ -25,6 +27,9 @@ class MinimumScalarProduct
 end
 
 problem = MinimumScalarProduct.new
-problem.solve('minimum-scalar-product-practice.in')
-problem.solve('minimum-scalar-product-small-practice.in')
-problem.solve('minimum-scalar-product-large-practice.in')
+
+Benchmark.bm do |x|
+  x.report('practice') { problem.solve('minimum-scalar-product-practice.in') }
+  x.report('small') { problem.solve('minimum-scalar-product-small-practice.in') }
+  x.report('large') { problem.solve('minimum-scalar-product-large-practice.in') }
+end
